@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TON DEX - Decentralized Exchange</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #006D77;
+            --primary-medium: #1A6E7A;
+            --primary-light: #83C5BE;
+            --accent-color: #FFDDD2;
+            --text-light: #FFFFFF;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --success-color: #4CAF50;
+            --warning-color: #FFC107;
+        }
+        
+        /* الأنماط الجديدة */
+        .back-button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+        
+        .back-button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        .launch-notification {
+            background-color: var(--accent-color);
+            color: var(--primary-dark);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        .scroll-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 100px;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        
+        .dex-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .dex-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        .swap-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(131, 197, 190, 0.2);
+        }
+        
+        .swap-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .swap-title {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        .swap-settings {
+            color: var(--primary-light);
+            cursor: pointer;
+        }
+        
+        .token-input {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .token-input-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .token-input-body {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .token-amount {
+            font-size: 24px;
+            font-weight: 600;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            width: 60%;
+        }
+        
+        .token-select {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+        
+        .token-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 8px;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .token-name {
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        
+        .swap-arrow {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        
+        .swap-arrow-btn {
+            background: var(--primary-medium);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-light);
+            transform: rotate(90deg);
+        }
+        
+        .swap-details {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .swap-detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .swap-button {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent-color) 100%);
+            color: var(--primary-dark);
+            border: none;
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+        
+        .swap-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .swap-button:disabled {
+            background: var(--primary-medium);
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: var(--primary-dark);
+            border-radius: 16px;
+            padding: 25px;
+            width: 85%;
+            max-width: 350px;
+            border: 1px solid var(--primary-light);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .search-token {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 12px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .tokens-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .token-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .token-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .token-item-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 16px;
+        }
+        
+        .token-item-details {
+            flex: 1;
+        }
+        
+        .token-item-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-container">
+        <!-- العناصر المضافة -->
+        <a href="https://piswap362.github.io/TonDex_Home/" class="back-button">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+        
+        <div class="launch-notification">
+            🚀 Coming Soon: Our platform will be launched very soon! Stay tuned for updates.
+        </div>
+
+        <div class="dex-header">
+            <h1 class="dex-title">TON DEX Swap</h1>
+        </div>
+        
+        <div class="swap-container">
+            <div class="swap-header">
+                <div class="swap-title">Swap Tokens</div>
+                <div class="swap-settings">
+                    <i class="fas fa-cog"></i>
+                </div>
+            </div>
+            
+            <div class="token-input">
+                <div class="token-input-header">
+                    <span>From</span>
+                    <span>Balance: 10.5 TON</span>
+                </div>
+                <div class="token-input-body">
+                    <input type="number" class="token-amount" placeholder="0.0" id="fromAmount">
+                    <div class="token-select" id="fromTokenSelect">
+                        <div class="token-icon">TON</div>
+                        <span class="token-name">TON</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="swap-arrow">
+                <button class="swap-arrow-btn">
+                    <i class="fas fa-arrow-down"></i>
+                </button>
+            </div>
+            
+            <div class="token-input">
+                <div class="token-input-header">
+                    <span>To</span>
+                    <span>Balance: 0.0</span>
+                </div>
+                <div class="token-input-body">
+                    <input type="number" class="token-amount" placeholder="0.0" id="toAmount" readonly>
+                    <div class="token-select" id="toTokenSelect">
+                        <div class="token-icon">USDT</div>
+                        <span class="token-name">USDT</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="swap-details">
+                <div class="swap-detail-row">
+                    <span>Exchange Rate</span>
+                    <span>1 TON = 2.15 USDT</span>
+                </div>
+                <div class="swap-detail-row">
+                    <span>Price Impact</span>
+                    <span style="color: var(--warning-color)">0.5%</span>
+                </div>
+                <div class="swap-detail-row">
+                    <span>Minimum Received</span>
+                    <span>2.12 USDT</span>
+                </div>
+                <div class="swap-detail-row">
+                    <span>Liquidity Fee</span>
+                    <span>0.05 TON</span>
+                </div>
+                <div class="swap-detail-row">
+                    <span>Route</span>
+                    <span>TON → USDT</span>
+                </div>
+            </div>
+            
+            <button class="swap-button" id="swapButton">Swap</button>
+        </div>
+    </div>
+    
+    <!-- Token Selection Modal -->
+    <div class="modal" id="tokenModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Select Token</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <input type="text" class="search-token" placeholder="Search token name or paste address">
+            
+            <div class="tokens-list">
+                <div class="token-item">
+                    <div class="token-item-icon">TON</div>
+                    <div class="token-item-details">
+                        <div class="token-item-name">TON</div>
+                    </div>
+                </div>
+                
+                <div class="token-item">
+                    <div class="token-item-icon">USDT</div>
+                    <div class="token-item-details">
+                        <div class="token-item-name">Tether USD</div>
+                    </div>
+                </div>
+                
+                <div class="token-item">
+                    <div class="token-item-icon">BTC</div>
+                    <div class="token-item-details">
+                        <div class="token-item-name">Bitcoin</div>
+                    </div>
+                </div>
+                
+                <div class="token-item">
+                    <div class="token-item-icon">ETH</div>
+                    <div class="token-item-details">
+                        <div class="token-item-name">Ethereum</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tokenSelects = document.querySelectorAll('.token-select');
+            const tokenModal = document.getElementById('tokenModal');
+            const closeModal = document.querySelector('.close-modal');
+            
+            tokenSelects.forEach(select => {
+                select.addEventListener('click', () => {
+                    tokenModal.style.display = 'flex';
+                });
+            });
+            
+            closeModal.addEventListener('click', () => {
+                tokenModal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === tokenModal) {
+                    tokenModal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
