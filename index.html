@@ -18,7 +18,6 @@
             --warning-color: #FFC107;
         }
         
-        /* الأنماط الجديدة */
         .back-button {
             display: inline-block;
             padding: 10px 15px;
@@ -82,6 +81,30 @@
             font-size: 24px;
             font-weight: 600;
             color: var(--accent-color);
+        }
+        
+        .dex-switch {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 5px;
+            display: flex;
+        }
+        
+        .dex-switch-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .dex-switch-btn.active {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            font-weight: 600;
         }
         
         .swap-container {
@@ -224,7 +247,119 @@
             transform: none !important;
         }
         
-        /* Modal styles */
+        .tokens-list {
+            margin-top: 30px;
+        }
+        
+        .tokens-list-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+        
+        .token-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .token-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .token-item-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 16px;
+        }
+        
+        .token-item-details {
+            flex: 1;
+        }
+        
+        .token-item-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        
+        .token-item-balance {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .bottom-menu {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 109, 119, 0.9);
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(131, 197, 190, 0.3);
+            z-index: 1000;
+            max-width: 400px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        
+        .menu-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 5px;
+            text-decoration: none;
+            position: relative;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: var(--transition);
+            opacity: 0.7;
+            flex: 1;
+        }
+        
+        .menu-btn:hover {
+            opacity: 1;
+            background: rgba(131, 197, 190, 0.1);
+        }
+        
+        .menu-btn i {
+            font-size: 20px;
+        }
+        
+        .menu-btn.active {
+            opacity: 1;
+            font-weight: 600;
+        }
+        
+        .menu-btn.active::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 3px;
+        }
+        
         .modal {
             display: none;
             position: fixed;
@@ -279,52 +414,10 @@
             margin-bottom: 15px;
             font-size: 16px;
         }
-        
-        .tokens-list {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .token-item {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .token-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .token-item-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--primary-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-size: 16px;
-        }
-        
-        .token-item-details {
-            flex: 1;
-        }
-        
-        .token-item-name {
-            font-weight: 600;
-            margin-bottom: 3px;
-        }
     </style>
 </head>
 <body>
     <div class="scroll-container">
-        <!-- العناصر المضافة -->
         <a href="https://piswap362.github.io/TonDex_Home/" class="back-button">
             <i class="fas fa-arrow-left"></i> Back
         </a>
@@ -335,6 +428,10 @@
 
         <div class="dex-header">
             <h1 class="dex-title">TON DEX Swap</h1>
+            <div class="dex-switch">
+                <button class="dex-switch-btn active">Swap</button>
+                <button class="dex-switch-btn">Pool</button>
+            </div>
         </div>
         
         <div class="swap-container">
@@ -369,7 +466,7 @@
             <div class="token-input">
                 <div class="token-input-header">
                     <span>To</span>
-                    <span>Balance: 5.2</span>
+                    <span>Balance: 0.0</span>
                 </div>
                 <div class="token-input-body">
                     <input type="number" class="token-amount" placeholder="0.0" id="toAmount" readonly>
@@ -406,71 +503,18 @@
             
             <button class="swap-button" id="swapButton">Swap</button>
         </div>
-    </div>
-    
-    <!-- Token Selection Modal -->
-    <div class="modal" id="tokenModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Select Token</h3>
-                <button class="close-modal">×</button>
-            </div>
-            <input type="text" class="search-token" placeholder="Search token name or paste address">
-            
-            <div class="tokens-list">
-                <div class="token-item">
-                    <div class="token-item-icon">TON</div>
-                    <div class="token-item-details">
-                        <div class="token-item-name">TON</div>
-                    </div>
-                </div>
-                
-                <div class="token-item">
-                    <div class="token-item-icon">TDX</div>
-                    <div class="token-item-details">
-                        <div class="token-item-name">TON DEX </div>
-                    </div>
-                </div>
-                
-                <div class="token-item">
-                    <div class="token-item-icon">CATI</div>
-                    <div class="token-item-details">
-                        <div class="token-item-name">Catizen</div>
-                    </div>
-                </div>
-                
-                <div class="token-item">
-                    <div class="token-item-icon">PX</div>
-                    <div class="token-item-details">
-                        <div class="token-item-name">Pixel</div>
-                    </div>
-                </div>
-            </div>
+        
+        <div class="tokens-list">
+            <div class="tokens-list-title"></div>
         </div>
-    </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tokenSelects = document.querySelectorAll('.token-select');
-            const tokenModal = document.getElementById('tokenModal');
-            const closeModal = document.querySelector('.close-modal');
-            
-            tokenSelects.forEach(select => {
-                select.addEventListener('click', () => {
-                    tokenModal.style.display = 'flex';
-                });
-            });
-            
-            closeModal.addEventListener('click', () => {
-                tokenModal.style.display = 'none';
-            });
-            
-            window.addEventListener('click', (e) => {
-                if (e.target === tokenModal) {
-                    tokenModal.style.display = 'none';
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+        
+        <div class="bottom-menu">
+            <a href="#" class="menu-btn active">
+                <i class="fas fa-exchange-alt"></i>
+                <span>Swap</span>
+            </a>
+            <a href="#" class="menu-btn">
+                <i class="fas fa-chart-line"></i>
+                <span>Stats</span>
+            </a>
+            <a href
