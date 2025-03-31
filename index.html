@@ -16,8 +16,171 @@
             --transition: all 0.3s ease;
             --success-color: #4CAF50;
             --warning-color: #FFC107;
+            --error-color: #FF5252;
+            --gradient-primary: linear-gradient(135deg, var(--primary-light) 0%, var(--accent-color) 100%);
+            --gradient-dark: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%);
         }
         
+        /* New Floating Action Button */
+        .fab-container {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 15px;
+        }
+        
+        .fab-main {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+        
+        .fab-main:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .fab-item {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-dark);
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        
+        .fab-container.open .fab-item {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        .fab-item:nth-child(1) { transition-delay: 0ms; }
+        .fab-item:nth-child(2) { transition-delay: 50ms; }
+        .fab-item:nth-child(3) { transition-delay: 100ms; }
+        
+        /* Button Links Section */
+        .button-links {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .link-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(131, 197, 190, 0.3);
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+        
+        .link-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .link-button i {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: var(--accent-color);
+        }
+        
+        .link-button span {
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        /* Enhanced Token Select Modal */
+        .token-modal .modal-content {
+            max-height: 70vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .token-list-container {
+            overflow-y: auto;
+            flex: 1;
+            margin-top: 15px;
+        }
+        
+        .token-category {
+            margin-bottom: 15px;
+        }
+        
+        .token-category-title {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Animated Price Chart Placeholder */
+        .price-chart {
+            height: 120px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .price-chart::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Enhanced Swap Details */
+        .swap-detail-row {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .swap-detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        /* Existing styles remain the same, just adding new ones below */
         .back-button {
             display: inline-block;
             padding: 10px 15px;
@@ -113,6 +276,12 @@
             padding: 20px;
             margin-bottom: 20px;
             border: 1px solid rgba(131, 197, 190, 0.2);
+            transition: var(--transition);
+        }
+        
+        .swap-container:hover {
+            border-color: rgba(131, 197, 190, 0.4);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
         }
         
         .swap-header {
@@ -129,6 +298,11 @@
         .swap-settings {
             color: var(--primary-light);
             cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .swap-settings:hover {
+            transform: rotate(30deg);
         }
         
         .token-input {
@@ -136,6 +310,11 @@
             border-radius: 12px;
             padding: 15px;
             margin-bottom: 10px;
+            transition: var(--transition);
+        }
+        
+        .token-input:hover {
+            background: rgba(255, 255, 255, 0.15);
         }
         
         .token-input-header {
@@ -161,6 +340,10 @@
             width: 60%;
         }
         
+        .token-amount:focus {
+            outline: none;
+        }
+        
         .token-select {
             display: flex;
             align-items: center;
@@ -168,6 +351,11 @@
             padding: 8px 12px;
             border-radius: 12px;
             cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .token-select:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
         
         .token-icon {
@@ -191,6 +379,7 @@
             display: flex;
             justify-content: center;
             margin: 10px 0;
+            position: relative;
         }
         
         .swap-arrow-btn {
@@ -205,6 +394,25 @@
             cursor: pointer;
             color: var(--text-light);
             transform: rotate(90deg);
+            transition: var(--transition);
+            z-index: 2;
+        }
+        
+        .swap-arrow-btn:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+        
+        .swap-arrow::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
         }
         
         .swap-details {
@@ -214,15 +422,8 @@
             margin-top: 15px;
         }
         
-        .swap-detail-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        
         .swap-button {
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent-color) 100%);
+            background: var(--gradient-primary);
             color: var(--primary-dark);
             border: none;
             width: 100%;
@@ -234,6 +435,30 @@
             cursor: pointer;
             transition: var(--transition);
             box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .swap-button::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0.3),
+                rgba(255, 255, 255, 0)
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
         }
         
         .swap-button:hover {
@@ -245,6 +470,10 @@
             background: var(--primary-medium);
             cursor: not-allowed;
             transform: none !important;
+        }
+        
+        .swap-button:disabled::after {
+            display: none;
         }
         
         .tokens-list {
@@ -381,6 +610,18 @@
             max-width: 350px;
             border: 1px solid var(--primary-light);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .modal-header {
@@ -402,6 +643,11 @@
             color: var(--text-light);
             font-size: 24px;
             cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            transform: rotate(90deg);
         }
         
         .search-token {
@@ -413,6 +659,30 @@
             color: var(--text-light);
             margin-bottom: 15px;
             font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .search-token:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 350px) {
+            .dex-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .dex-switch {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .button-links {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -478,6 +748,9 @@
                 </div>
             </div>
             
+            <!-- Price Chart Placeholder -->
+            <div class="price-chart"></div>
+            
             <div class="swap-details">
                 <div class="swap-detail-row">
                     <span>Exchange Rate</span>
@@ -504,8 +777,24 @@
             <button class="swap-button" id="swapButton">Swap</button>
         </div>
         
-        <div class="tokens-list">
-            <div class="tokens-list-title"></div>
+        <!-- Button Links Section -->
+        <div class="button-links">
+            <a href="#" class="link-button">
+                <i class="fas fa-history"></i>
+                <span>Transaction History</span>
+            </a>
+            <a href="#" class="link-button">
+                <i class="fas fa-wallet"></i>
+                <span>Connect Wallet</span>
+            </a>
+            <a href="#" class="link-button">
+                <i class="fas fa-info-circle"></i>
+                <span>Learn to Swap</span>
+            </a>
+            <a href="#" class="link-button">
+                <i class="fas fa-star"></i>
+                <span>Favorite Pairs</span>
+            </a>
         </div>
         
         <div class="bottom-menu">
@@ -517,7 +806,160 @@
                 <i class="fas fa-chart-line"></i>
                 <span>Stats</span>
             </a>
+            <a href="#" class="menu-btn">
+                <i class="fas fa-coins"></i>
+                <span>Pools</span>
+            </a>
+            <a href="#" class="menu-btn">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
         </div>
     </div>
+    
+    <!-- Floating Action Button -->
+    <div class="fab-container" id="fabContainer">
+        <button class="fab-main" id="fabMain">
+            <i class="fas fa-bolt"></i>
+        </button>
+        <button class="fab-item">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <button class="fab-item">
+            <i class="fas fa-qrcode"></i>
+        </button>
+        <button class="fab-item">
+            <i class="fas fa-headset"></i>
+        </button>
+    </div>
+    
+    <!-- Token Select Modal -->
+    <div class="modal" id="tokenModal">
+        <div class="modal-content token-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Select Token</h2>
+                <button class="close-modal" id="closeTokenModal">&times;</button>
+            </div>
+            <input type="text" class="search-token" placeholder="Search token name or paste address">
+            <div class="token-list-container">
+                <div class="token-category">
+                    <div class="token-category-title">Popular Tokens</div>
+                    <div class="token-item">
+                        <div class="token-item-icon">TON</div>
+                        <div class="token-item-details">
+                            <div class="token-item-name">TON</div>
+                            <div class="token-item-balance">Toncoin</div>
+                        </div>
+                    </div>
+                    <div class="token-item">
+                        <div class="token-item-icon">USDT</div>
+                        <div class="token-item-details">
+                            <div class="token-item-name">USDT</div>
+                            <div class="token-item-balance">Tether</div>
+                        </div>
+                    </div>
+                    <div class="token-item">
+                        <div class="token-item-icon">TDX</div>
+                        <div class="token-item-details">
+                            <div class="token-item-name">TDX</div>
+                            <div class="token-item-balance">TonDex Token</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="token-category">
+                    <div class="token-category-title">Other Tokens</div>
+                    <div class="token-item">
+                        <div class="token-item-icon">BTC</div>
+                        <div class="token-item-details">
+                            <div class="token-item-name">WBTC</div>
+                            <div class="token-item-balance">Wrapped Bitcoin</div>
+                        </div>
+                    </div>
+                    <div class="token-item">
+                        <div class="token-item-icon">ETH</div>
+                        <div class="token-item-details">
+                            <div class="token-item-name">WETH</div>
+                            <div class="token-item-balance">Wrapped Ethereum</div>
+                        </div>
+                    </div>
+                    <div class="token-item">
+                        <div class="token-item-icon">DAI</div>
+                        <div class="token-item-details">
+                            <div class="token-item-name">DAI</div>
+                            <div class="token-item-balance">Dai Stablecoin</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Token Select Modal Logic
+        const fromTokenSelect = document.getElementById('fromTokenSelect');
+        const toTokenSelect = document.getElementById('toTokenSelect');
+        const tokenModal = document.getElementById('tokenModal');
+        const closeTokenModal = document.getElementById('closeTokenModal');
+        
+        [fromTokenSelect, toTokenSelect].forEach(element => {
+            element.addEventListener('click', () => {
+                tokenModal.style.display = 'flex';
+            });
+        });
+        
+        closeTokenModal.addEventListener('click', () => {
+            tokenModal.style.display = 'none';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target === tokenModal) {
+                tokenModal.style.display = 'none';
+            }
+        });
+        
+        // FAB Logic
+        const fabContainer = document.getElementById('fabContainer');
+        const fabMain = document.getElementById('fabMain');
+        
+        fabMain.addEventListener('click', () => {
+            fabContainer.classList.toggle('open');
+        });
+        
+        // Swap button animation
+        const swapButton = document.getElementById('swapButton');
+        
+        swapButton.addEventListener('mouseenter', () => {
+            if (!swapButton.disabled) {
+                swapButton.style.transform = 'translateY(-3px)';
+                swapButton.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.15)';
+            }
+        });
+        
+        swapButton.addEventListener('mouseleave', () => {
+            if (!swapButton.disabled) {
+                swapButton.style.transform = '';
+                swapButton.style.boxShadow = '';
+            }
+        });
+        
+        // Token amount input validation
+        const fromAmount = document.getElementById('fromAmount');
+        
+        fromAmount.addEventListener('input', (e) => {
+            // Simple validation - prevent negative numbers
+            if (e.target.value < 0) {
+                e.target.value = '';
+            }
+            
+            // Simulate conversion (in a real app, this would be an API call)
+            const toAmount = document.getElementById('toAmount');
+            if (e.target.value && !isNaN(e.target.value)) {
+                toAmount.value = (e.target.value * 2.15).toFixed(4);
+            } else {
+                toAmount.value = '';
+            }
+        });
+    </script>
 </body>
 </html>
